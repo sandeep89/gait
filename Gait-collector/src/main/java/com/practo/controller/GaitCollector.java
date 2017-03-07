@@ -1,8 +1,6 @@
 package com.practo.controller;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,21 +11,23 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.practo.entity.Event;
 
 @RestController
 public class GaitCollector {
-
-	private static final String template = "Hello, %s!";
-	private final AtomicLong counter = new AtomicLong();
 	
 	@RequestMapping(value="/l", method=RequestMethod.GET)
 	public Event greeting(@RequestParam(value = "data") String data) throws JsonParseException, JsonMappingException, IOException {
 		byte[] payload = Base64Utils.decodeFromString(data);
 		String payloadString = new String(payload);
-		ObjectMapper mapper = new ObjectMapper();
-		Event event = mapper.readValue(payloadString, Event.class);
+		JsonParser jsonParser = new JsonParser();
+		JsonObject jsonObject = jsonParser.parse(payloadString).getAsJsonObject();
+		Gson gson = new Gson();
+		String eventString = gson.toJson(jsonObject);
+		Event event = gson.fromJson(eventString, Event.class);
 		return event;
 	}
 	
