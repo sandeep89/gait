@@ -2,19 +2,42 @@ package com.practo.entity;
 
 public class Event {
 
-    private final long id;
-    private final String content;
+	private String actor;
+	private String action;
+	private String object;
+	private String platform;
 
-    public Event(long id, String content) {
-        this.id = id;
-        this.content = content;
-    }
+	public String getActor() {
+		return actor;
+	}
 
-    public long getId() {
-        return id;
-    }
+	public void setActor(String actor) {
+		this.actor = actor;
+	}
 
-    public String getContent() {
-        return content;
-    }
+	public String getAction() {
+		return action;
+	}
+
+	public void setAction(String action) {
+		this.action = action;
+	}
+
+	public String getObject() {
+		return object;
+	}
+
+	public void setObject(String object) {
+		this.object = object;
+	}
+
+	public String getPlatform() {
+		return platform;
+	}
+
+	public void setPlatform(String platform) {
+		this.platform = platform;
+	}
+	
+
 }
